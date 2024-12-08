@@ -410,11 +410,27 @@ func chairGetNotificationSSE(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	ch := make(chan struct{}, 1)
+	registerCharNotificationSignalHandler(chair.ID, ch)
+	defer unregisterCharNotificationSignalHandler(chair.ID, ch)
+
 	for {
 		select {
 		case <-ctx.Done():
 			return
-		case <-time.After(100 * time.Millisecond):
+		case <-time.After(1 * time.Second):
+			data, err := p.getUnsentNotification(ctx)
+			if err != nil {
+				writeError(w, http.StatusInternalServerError, err)
+				return
+			}
+			if data != nil {
+				if err := writeMessage(data); err != nil {
+					writeError(w, http.StatusInternalServerError, err)
+					return
+				}
+			}
+		case <-ch:
 			data, err := p.getUnsentNotification(ctx)
 			if err != nil {
 				writeError(w, http.StatusInternalServerError, err)
@@ -602,6 +618,7 @@ func chairPostRideStatus(w http.ResponseWriter, r *http.Request) {
 		writeError(w, http.StatusInternalServerError, err)
 		return
 	}
+	signalCharNotification(chair.ID)
 
 	w.WriteHeader(http.StatusNoContent)
 }

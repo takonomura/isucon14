@@ -619,6 +619,8 @@ func appPostRideEvaluatation(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	signalCharNotification(ride.ChairID.String)
+
 	writeJSON(w, http.StatusOK, &appPostRideEvaluationResponse{
 		CompletedAt: ride.UpdatedAt.UnixMilli(),
 	})
