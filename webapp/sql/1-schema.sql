@@ -171,6 +171,7 @@ CREATE TABLE ride_statuses
   PRIMARY KEY (id)
 )
   COMMENT = 'ライドステータスの変更履歴テーブル';
+CREATE INDEX idx_ride_statuses_ride_id_created_at ON rides (ride_id, created_at DESC);
 
 DROP TABLE IF EXISTS owners;
 CREATE TABLE owners
