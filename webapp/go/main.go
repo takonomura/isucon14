@@ -101,7 +101,7 @@ func setup() http.Handler {
 		authedMux := mux.With(chairAuthMiddleware)
 		authedMux.HandleFunc("POST /api/chair/activity", chairPostActivity)
 		authedMux.HandleFunc("POST /api/chair/coordinate", chairPostCoordinate)
-		authedMux.HandleFunc("GET /api/chair/notification", chairGetNotification)
+		authedMux.HandleFunc("GET /api/chair/notification", chairGetNotificationSSE)
 		authedMux.HandleFunc("POST /api/chair/rides/{ride_id}/status", chairPostRideStatus)
 	}
 
