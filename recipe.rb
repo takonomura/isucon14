@@ -16,15 +16,16 @@ MItamae::ResourceContext.class_eval do
 end
 
 service 'isuride-go.service' do
-	action enable_if(HOST == ISU01)
+	action %i[enable start]
 end
 
 service 'mysql' do
-	action enable_if(HOST == ISU02)
+	action %i[enable start]
 end
 
+
 service 'nginx' do
-	action enable_if(HOST == ISU01)
+	action %i[enable start]
 end
 
 #package 'redis'
