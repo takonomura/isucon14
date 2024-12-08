@@ -876,7 +876,7 @@ func appGetNearbyChairs(w http.ResponseWriter, r *http.Request) {
 		ctx,
 		&chairLocations,
 		"SELECT * FROM chair_locations WHERE (ABS(latitude - ?) + ABS(longitude - ?)) <= ?",
-		coordinate.Latitude, coordinate.Longitude, distance
+		coordinate.Latitude, coordinate.Longitude, distance,
 	)
 
 	locationByChairID := make(map[string]ChairLocation, len(chairLocations))
