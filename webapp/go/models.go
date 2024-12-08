@@ -11,6 +11,8 @@ type Chair struct {
 	Name              string       `db:"name"`
 	Model             string       `db:"model"`
 	IsActive          bool         `db:"is_active"`
+	IsFree            bool         `db:"is_free"`
+	IsMatchable       bool         `db:"is_matchable"`
 	Latitude          *int         `db:"latitude"`
 	Longitude         *int         `db:"longitude"`
 	TotalDistance     int          `db:"total_distance"`
