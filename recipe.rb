@@ -43,7 +43,6 @@ end
 	remote_file conf do
 		source conf_source
 		mode '0644'
-		notifies :restart, "service[#{service}]"
 	end
 end
 
