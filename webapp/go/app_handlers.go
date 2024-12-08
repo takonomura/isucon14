@@ -871,32 +871,13 @@ func appGetNearbyChairs(w http.ResponseWriter, r *http.Request) {
 	}
 	defer tx.Rollback()
 
-	var chairLocations []ChairLocation
+	var chairs []Chair
 	err = tx.SelectContext(
 		ctx,
-		&chairLocations,
-		"SELECT * FROM chair_locations WHERE (ABS(latitude - ?) + ABS(longitude - ?)) <= ?",
+		&chairs,
+		"SELECT * FROM chairs WHERE is_active = TRUE AND (ABS(latitude - ?) + ABS(longitude - ?)) <= ?",
 		coordinate.Latitude, coordinate.Longitude, distance,
 	)
-
-	locationByChairID := make(map[string]ChairLocation, len(chairLocations))
-	chairIDs := make([]string, len(chairLocations))
-	for i, c := range chairLocations {
-		locationByChairID[c.ChairID] = c
-		chairIDs[i] = c.ChairID
-	}
-
-	query, args, err := sqlx.In("SELECT * FROM chairs WHERE id IN (?) AND is_active = TRUE", chairIDs)
-	if err != nil {
-		writeError(w, http.StatusInternalServerError, err)
-		return
-	}
-	var chairs []Chair
-	err = tx.SelectContext(ctx, &chairs, query, args...)
-	if err != nil {
-		writeError(w, http.StatusInternalServerError, err)
-		return
-	}
 
 	nearbyChairs := []appGetNearbyChairsResponseChair{}
 	for _, chair := range chairs {
@@ -924,14 +905,13 @@ func appGetNearbyChairs(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// 最新の位置情報を取得
-		chairLocation := locationByChairID[chair.ID]
 		nearbyChairs = append(nearbyChairs, appGetNearbyChairsResponseChair{
 			ID:    chair.ID,
 			Name:  chair.Name,
 			Model: chair.Model,
 			CurrentCoordinate: Coordinate{
-				Latitude:  chairLocation.Latitude,
-				Longitude: chairLocation.Longitude,
+				Latitude:  chair.Latitude,
+				Longitude: chair.Longitude,
 			},
 		})
 	}
