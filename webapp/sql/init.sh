@@ -40,5 +40,5 @@ mysql -u"$ISUCON_DB_USER" \
 		-p"$ISUCON_DB_PASSWORD" \
 		--host "$ISUCON_DB_HOST" \
 		--port "$ISUCON_DB_PORT" \
-		"$ISUCON_DB_NAME" 
+		"$ISUCON_DB_NAME" \
 		-e "TRUNCATE TABLE performance_schema.events_statements_summary_by_digest;"
