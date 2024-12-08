@@ -875,8 +875,8 @@ func appGetNearbyChairs(w http.ResponseWriter, r *http.Request) {
 	err = tx.SelectContext(
 		ctx,
 		&chairLocations,
-		"SELECT * FROM chair_locations WHERE ABS(latitude - ?) + ABS(longitude - ?) <= 50",
-		coordinate.Latitude, coordinate.Longitude,
+		"SELECT * FROM chair_locations WHERE (ABS(latitude - ?) + ABS(longitude - ?)) <= ?",
+		coordinate.Latitude, coordinate.Longitude, distance
 	)
 
 	locationByChairID := make(map[string]ChairLocation, len(chairLocations))
