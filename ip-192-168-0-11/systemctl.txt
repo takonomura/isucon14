@@ -1,0 +1,187 @@
+  UNIT                                                                         LOAD   ACTIVE     SUB       DESCRIPTION
+  proc-sys-fs-binfmt_misc.automount                                            loaded active     running   Arbitrary Executable File Formats File System Automount Point
+  dev-loop3.device                                                             loaded activating tentative /dev/loop3
+  sys-devices-pci0000:00-0000:00:04.0-nvme-nvme0-nvme0n1-nvme0n1p1.device      loaded active     plugged   Amazon Elastic Block Store cloudimg-rootfs
+  sys-devices-pci0000:00-0000:00:04.0-nvme-nvme0-nvme0n1-nvme0n1p14.device     loaded active     plugged   Amazon Elastic Block Store 14
+  sys-devices-pci0000:00-0000:00:04.0-nvme-nvme0-nvme0n1-nvme0n1p15.device     loaded active     plugged   Amazon Elastic Block Store UEFI
+  sys-devices-pci0000:00-0000:00:04.0-nvme-nvme0-nvme0n1-nvme0n1p16.device     loaded active     plugged   Amazon Elastic Block Store BOOT
+  sys-devices-pci0000:00-0000:00:04.0-nvme-nvme0-nvme0n1.device                loaded active     plugged   Amazon Elastic Block Store
+  sys-devices-pci0000:00-0000:00:05.0-net-ens5.device                          loaded active     plugged   Elastic Network Adapter (ENA)
+  sys-devices-platform-serial8250-serial8250:0-serial8250:0.1-tty-ttyS1.device loaded active     plugged   /sys/devices/platform/serial8250/serial8250:0/serial8250:0.1/tty/ttyS1
+  sys-devices-platform-serial8250-serial8250:0-serial8250:0.2-tty-ttyS2.device loaded active     plugged   /sys/devices/platform/serial8250/serial8250:0/serial8250:0.2/tty/ttyS2
+  sys-devices-platform-serial8250-serial8250:0-serial8250:0.3-tty-ttyS3.device loaded active     plugged   /sys/devices/platform/serial8250/serial8250:0/serial8250:0.3/tty/ttyS3
+  sys-devices-pnp0-00:04-00:04:0-00:04:0.0-tty-ttyS0.device                    loaded active     plugged   /sys/devices/pnp0/00:04/00:04:0/00:04:0.0/tty/ttyS0
+  sys-devices-virtual-block-loop0.device                                       loaded active     plugged   /sys/devices/virtual/block/loop0
+  sys-devices-virtual-block-loop1.device                                       loaded active     plugged   /sys/devices/virtual/block/loop1
+  sys-devices-virtual-block-loop2.device                                       loaded active     plugged   /sys/devices/virtual/block/loop2
+  sys-devices-virtual-misc-rfkill.device                                       loaded active     plugged   /sys/devices/virtual/misc/rfkill
+  sys-devices-virtual-tty-ttyprintk.device                                     loaded active     plugged   /sys/devices/virtual/tty/ttyprintk
+  sys-module-configfs.device                                                   loaded active     plugged   /sys/module/configfs
+  sys-module-fuse.device                                                       loaded active     plugged   /sys/module/fuse
+  sys-subsystem-net-devices-ens5.device                                        loaded active     plugged   Elastic Network Adapter (ENA)
+  -.mount                                                                      loaded active     mounted   Root Mount
+  boot-efi.mount                                                               loaded active     mounted   /boot/efi
+  boot.mount                                                                   loaded active     mounted   /boot
+  dev-hugepages.mount                                                          loaded active     mounted   Huge Pages File System
+  dev-mqueue.mount                                                             loaded active     mounted   POSIX Message Queue File System
+  proc-sys-fs-binfmt_misc.mount                                                loaded active     mounted   Arbitrary Executable File Formats File System
+  run-user-1100.mount                                                          loaded active     mounted   /run/user/1100
+  snap-amazon\x2dssm\x2dagent-9881.mount                                       loaded active     mounted   Mount unit for amazon-ssm-agent, revision 9881
+  snap-core22-1663.mount                                                       loaded active     mounted   Mount unit for core22, revision 1663
+  snap-core22-1722.mount                                                       loaded active     mounted   Mount unit for core22, revision 1722
+  snap-snapd-21759.mount                                                       loaded active     mounted   Mount unit for snapd, revision 21759
+  sys-fs-fuse-connections.mount                                                loaded active     mounted   FUSE Control File System
+  sys-kernel-config.mount                                                      loaded active     mounted   Kernel Configuration File System
+  sys-kernel-debug.mount                                                       loaded active     mounted   Kernel Debug File System
+  sys-kernel-tracing.mount                                                     loaded active     mounted   Kernel Trace File System
+  acpid.path                                                                   loaded active     running   ACPI Events Check
+  systemd-ask-password-console.path                                            loaded active     waiting   Dispatch Password Requests to Console Directory Watch
+  systemd-ask-password-wall.path                                               loaded active     waiting   Forward Password Requests to Wall Directory Watch
+  init.scope                                                                   loaded active     running   System and Service Manager
+  session-6.scope                                                              loaded active     running   Session 6 of User isucon
+  session-7.scope                                                              loaded active     running   Session 7 of User isucon
+  acpid.service                                                                loaded active     running   ACPI event daemon
+  apparmor.service                                                             loaded active     exited    Load AppArmor profiles
+  apport.service                                                               loaded active     exited    automatic crash report generation
+  blk-availability.service                                                     loaded active     exited    Availability of block devices
+  chrony.service                                                               loaded active     running   chrony, an NTP client/server
+  cloud-config.service                                                         loaded active     exited    Cloud-init: Config Stage
+  cloud-final.service                                                          loaded active     exited    Cloud-init: Final Stage
+  cloud-init-local.service                                                     loaded active     exited    Cloud-init: Local Stage (pre-network)
+  cloud-init.service                                                           loaded active     exited    Cloud-init: Network Stage
+  console-setup.service                                                        loaded active     exited    Set console font and keymap
+  cron.service                                                                 loaded active     running   Regular background program processing daemon
+  dbus.service                                                                 loaded active     running   D-Bus System Message Bus
+  envcheck.service                                                             loaded active     exited    Check Environments for ISUCON14 Contestants
+  finalrd.service                                                              loaded active     exited    Create final runtime dir for shutdown pivot root
+  getty@tty1.service                                                           loaded active     running   Getty on tty1
+  irqbalance.service                                                           loaded active     running   irqbalance daemon
+  isuride-go.service                                                           loaded active     running   isuride-go
+  isuride-matcher.service                                                      loaded active     running   isuride-matcher
+  isuride-payment_mock.service                                                 loaded active     running   isuride-payment_mock
+  keyboard-setup.service                                                       loaded active     exited    Set the console keyboard layout
+  kmod-static-nodes.service                                                    loaded active     exited    Create List of Static Device Nodes
+  lvm2-monitor.service                                                         loaded active     exited    Monitoring of LVM2 mirrors, snapshots etc. using dmeventd or progress polling
+  ModemManager.service                                                         loaded active     running   Modem Manager
+  multipathd.service                                                           loaded active     running   Device-Mapper Multipath Device Controller
+  mysql.service                                                                loaded active     running   MySQL Community Server
+  networkd-dispatcher.service                                                  loaded active     running   Dispatcher daemon for systemd-networkd
+  nginx.service                                                                loaded active     running   A high performance web server and a reverse proxy server
+  plymouth-quit-wait.service                                                   loaded active     exited    Hold until boot process finishes up
+  plymouth-quit.service                                                        loaded active     exited    Terminate Plymouth Boot Screen
+  plymouth-read-write.service                                                  loaded active     exited    Tell Plymouth To Write Out Runtime Data
+  polkit.service                                                               loaded active     running   Authorization Manager
+  rsyslog.service                                                              loaded active     running   System Logging Service
+  serial-getty@ttyS0.service                                                   loaded active     running   Serial Getty on ttyS0
+  setvtrgb.service                                                             loaded active     exited    Set console scheme
+  snap.amazon-ssm-agent.amazon-ssm-agent.service                               loaded active     running   Service for snap application amazon-ssm-agent.amazon-ssm-agent
+  snapd.apparmor.service                                                       loaded active     exited    Load AppArmor profiles managed internally by snapd
+  snapd.seeded.service                                                         loaded active     exited    Wait until snapd is fully seeded
+  snapd.service                                                                loaded active     running   Snap Daemon
+  ssh.service                                                                  loaded active     running   OpenBSD Secure Shell server
+  sysstat.service                                                              loaded active     exited    Resets System Activity Logs
+  systemd-binfmt.service                                                       loaded active     exited    Set Up Additional Binary Formats
+  systemd-fsck-root.service                                                    loaded active     exited    File System Check on Root Device
+  systemd-fsck@dev-disk-by\x2dlabel-BOOT.service                               loaded active     exited    File System Check on /dev/disk/by-label/BOOT
+  systemd-fsck@dev-disk-by\x2dlabel-UEFI.service                               loaded active     exited    File System Check on /dev/disk/by-label/UEFI
+  systemd-journal-flush.service                                                loaded active     exited    Flush Journal to Persistent Storage
+  systemd-journald.service                                                     loaded active     running   Journal Service
+  systemd-logind.service                                                       loaded active     running   User Login Management
+  systemd-machine-id-commit.service                                            loaded active     exited    Commit a transient machine-id on disk
+  systemd-modules-load.service                                                 loaded active     exited    Load Kernel Modules
+  systemd-networkd-wait-online.service                                         loaded active     exited    Wait for Network to be Configured
+  systemd-networkd.service                                                     loaded active     running   Network Configuration
+  systemd-random-seed.service                                                  loaded active     exited    Load/Save OS Random Seed
+  systemd-remount-fs.service                                                   loaded active     exited    Remount Root and Kernel File Systems
+  systemd-resolved.service                                                     loaded active     running   Network Name Resolution
+  systemd-sysctl.service                                                       loaded active     exited    Apply Kernel Variables
+  systemd-tmpfiles-setup-dev-early.service                                     loaded active     exited    Create Static Device Nodes in /dev gracefully
+  systemd-tmpfiles-setup-dev.service                                           loaded active     exited    Create Static Device Nodes in /dev
+  systemd-tmpfiles-setup.service                                               loaded active     exited    Create Volatile Files and Directories
+  systemd-udev-trigger.service                                                 loaded active     exited    Coldplug All udev Devices
+  systemd-udevd.service                                                        loaded active     running   Rule-based Manager for Device Events and Files
+  systemd-update-utmp.service                                                  loaded active     exited    Record System Boot/Shutdown in UTMP
+  systemd-user-sessions.service                                                loaded active     exited    Permit User Sessions
+  udisks2.service                                                              loaded active     running   Disk Manager
+  ufw.service                                                                  loaded active     exited    Uncomplicated firewall
+  unattended-upgrades.service                                                  loaded active     running   Unattended Upgrades Shutdown
+  user-runtime-dir@1100.service                                                loaded active     exited    User Runtime Directory /run/user/1100
+  user@1100.service                                                            loaded active     running   User Manager for UID 1100
+  -.slice                                                                      loaded active     active    Root Slice
+  system-getty.slice                                                           loaded active     active    Slice /system/getty
+  system-modprobe.slice                                                        loaded active     active    Slice /system/modprobe
+  system-serial\x2dgetty.slice                                                 loaded active     active    Slice /system/serial-getty
+  system-systemd\x2dfsck.slice                                                 loaded active     active    Slice /system/systemd-fsck
+  system.slice                                                                 loaded active     active    System Slice
+  user-1100.slice                                                              loaded active     active    User Slice of UID 1100
+  user.slice                                                                   loaded active     active    User and Session Slice
+  acpid.socket                                                                 loaded active     running   ACPID Listen Socket
+  cloud-init-hotplugd.socket                                                   loaded active     listening cloud-init hotplug hook socket
+  dbus.socket                                                                  loaded active     running   D-Bus System Message Bus Socket
+  dm-event.socket                                                              loaded active     listening Device-mapper event daemon FIFOs
+  iscsid.socket                                                                loaded active     listening Open-iSCSI iscsid Socket
+  lvm2-lvmpolld.socket                                                         loaded active     listening LVM2 poll daemon socket
+  lxd-installer.socket                                                         loaded active     listening Helper to install lxd snap on demand
+  multipathd.socket                                                            loaded active     running   multipathd control socket
+  snapd.socket                                                                 loaded active     running   Socket activation for snappy daemon
+  ssh.socket                                                                   loaded active     running   OpenBSD Secure Shell server socket
+  syslog.socket                                                                loaded active     running   Syslog Socket
+  systemd-fsckd.socket                                                         loaded active     listening fsck to fsckd communication Socket
+  systemd-initctl.socket                                                       loaded active     listening initctl Compatibility Named Pipe
+  systemd-journald-dev-log.socket                                              loaded active     running   Journal Socket (/dev/log)
+  systemd-journald.socket                                                      loaded active     running   Journal Socket
+  systemd-networkd.socket                                                      loaded active     running   Network Service Netlink Socket
+  systemd-rfkill.socket                                                        loaded active     listening Load/Save RF Kill Switch Status /dev/rfkill Watch
+  systemd-sysext.socket                                                        loaded active     listening System Extension Image Management (Varlink)
+  systemd-udevd-control.socket                                                 loaded active     running   udev Control Socket
+  systemd-udevd-kernel.socket                                                  loaded active     running   udev Kernel Socket
+  uuidd.socket                                                                 loaded active     listening UUID daemon activation socket
+  basic.target                                                                 loaded active     active    Basic System
+  cloud-config.target                                                          loaded active     active    Cloud-config availability
+  cloud-init.target                                                            loaded active     active    Cloud-init target
+  cryptsetup.target                                                            loaded active     active    Local Encrypted Volumes
+  getty-pre.target                                                             loaded active     active    Preparation for Logins
+  getty.target                                                                 loaded active     active    Login Prompts
+  graphical.target                                                             loaded active     active    Graphical Interface
+  integritysetup.target                                                        loaded active     active    Local Integrity Protected Volumes
+  local-fs-pre.target                                                          loaded active     active    Preparation for Local File Systems
+  local-fs.target                                                              loaded active     active    Local File Systems
+  multi-user.target                                                            loaded active     active    Multi-User System
+  network-online.target                                                        loaded active     active    Network is Online
+  network-pre.target                                                           loaded active     active    Preparation for Network
+  network.target                                                               loaded active     active    Network
+  nss-lookup.target                                                            loaded active     active    Host and Network Name Lookups
+  paths.target                                                                 loaded active     active    Path Units
+  remote-fs-pre.target                                                         loaded active     active    Preparation for Remote File Systems
+  remote-fs.target                                                             loaded active     active    Remote File Systems
+  slices.target                                                                loaded active     active    Slice Units
+  snapd.mounts-pre.target                                                      loaded active     active    Mounting snaps
+  snapd.mounts.target                                                          loaded active     active    Mounted snaps
+  sockets.target                                                               loaded active     active    Socket Units
+  swap.target                                                                  loaded active     active    Swaps
+  sysinit.target                                                               loaded active     active    System Initialization
+  time-set.target                                                              loaded active     active    System Time Set
+  time-sync.target                                                             loaded active     active    System Time Synchronized
+  timers.target                                                                loaded active     active    Timer Units
+  veritysetup.target                                                           loaded active     active    Local Verity Protected Volumes
+  apt-daily-upgrade.timer                                                      loaded active     waiting   Daily apt upgrade and clean activities
+  apt-daily.timer                                                              loaded active     waiting   Daily apt download activities
+  dpkg-db-backup.timer                                                         loaded active     waiting   Daily dpkg database backup timer
+  e2scrub_all.timer                                                            loaded active     waiting   Periodic ext4 Online Metadata Check for All Filesystems
+  fstrim.timer                                                                 loaded active     waiting   Discard unused filesystem blocks once a week
+  fwupd-refresh.timer                                                          loaded active     waiting   Refresh fwupd metadata regularly
+  logrotate.timer                                                              loaded active     waiting   Daily rotation of log files
+  man-db.timer                                                                 loaded active     waiting   Daily man-db regeneration
+  motd-news.timer                                                              loaded active     waiting   Message of the Day
+  sysstat-collect.timer                                                        loaded active     waiting   Run system activity accounting tool every 10 minutes
+  sysstat-summary.timer                                                        loaded active     waiting   Generate summary of yesterday's process accounting
+  systemd-tmpfiles-clean.timer                                                 loaded active     waiting   Daily Cleanup of Temporary Directories
+  update-notifier-download.timer                                               loaded active     waiting   Download data for packages that failed at package install time
+  update-notifier-motd.timer                                                   loaded active     waiting   Check to see whether there is a new version of Ubuntu available
+
+Legend: LOAD   → Reflects whether the unit definition was properly loaded.
+        ACTIVE → The high-level unit activation state, i.e. generalization of SUB.
+        SUB    → The low-level unit activation state, values depend on unit type.
+
+179 loaded units listed. Pass --all to see loaded but inactive units, too.
+To show all installed unit files use 'systemctl list-unit-files'.

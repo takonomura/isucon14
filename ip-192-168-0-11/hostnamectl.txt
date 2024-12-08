@@ -1,0 +1,14 @@
+ Static hostname: ip-192-168-0-11
+       Icon name: computer-vm
+         Chassis: vm 🖴
+      Machine ID: ec2bfd11fb5b9cfb2ba68217f9d5386a
+         Boot ID: 46ba481f4b094305a4aec92b1bad08a6
+  Virtualization: amazon
+Operating System: Ubuntu 24.04.1 LTS
+          Kernel: Linux 6.8.0-1018-aws
+    Architecture: x86-64
+ Hardware Vendor: Amazon EC2
+  Hardware Model: c5.large
+Firmware Version: 1.0
+   Firmware Date: Mon 2017-10-16
+    Firmware Age: 7y 1month 3w 1d

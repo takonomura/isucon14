@@ -1,0 +1,91 @@
+● ip-192-168-0-11
+    State: running
+    Units: 424 loaded (incl. loaded aliases)
+     Jobs: 0 queued
+   Failed: 0 units
+    Since: Sun 2024-12-08 01:01:34 UTC; 7min ago
+  systemd: 255.4-1ubuntu8.4
+   CGroup: /
+           ├─init.scope
+           │ └─1 /sbin/init
+           ├─system.slice
+           │ ├─ModemManager.service
+           │ │ └─798 /usr/sbin/ModemManager
+           │ ├─acpid.service
+           │ │ └─631 /usr/sbin/acpid
+           │ ├─chrony.service
+           │ │ ├─751 /usr/sbin/chronyd -F 1
+           │ │ └─791 /usr/sbin/chronyd -F 1
+           │ ├─cron.service
+           │ │ └─635 /usr/sbin/cron -f -P
+           │ ├─dbus.service
+           │ │ └─636 @dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+           │ ├─irqbalance.service
+           │ │ └─642 /usr/sbin/irqbalance
+           │ ├─isuride-go.service
+           │ │ └─1060 /home/isucon/webapp/go/isuride
+           │ ├─isuride-matcher.service
+           │ │ ├─1061 /bin/sh -c "while true; do curl -s https://isuride.xiv.isucon.net/api/internal/matching; sleep \$ISUCON_MATCHING_INTERVAL; done"
+           │ │ └─4841 sleep 0.5
+           │ ├─isuride-payment_mock.service
+           │ │ └─1062 /home/isucon/webapp/payment_mock/payment_mock
+           │ ├─multipathd.service
+           │ │ └─187 /sbin/multipathd -d -s
+           │ ├─mysql.service
+           │ │ └─1014 /usr/sbin/mysqld
+           │ ├─networkd-dispatcher.service
+           │ │ └─648 /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
+           │ ├─nginx.service
+           │ │ ├─790 "nginx: master process /usr/sbin/nginx -g daemon on; master_process on;"
+           │ │ ├─795 "nginx: worker process"
+           │ │ └─796 "nginx: worker process"
+           │ ├─polkit.service
+           │ │ └─651 /usr/lib/polkit-1/polkitd --no-debug
+           │ ├─rsyslog.service
+           │ │ └─765 /usr/sbin/rsyslogd -n -iNONE
+           │ ├─snap.amazon-ssm-agent.amazon-ssm-agent.service
+           │ │ ├─ 653 /snap/amazon-ssm-agent/9881/amazon-ssm-agent
+           │ │ └─1236 /snap/amazon-ssm-agent/9881/ssm-agent-worker
+           │ ├─snapd.service
+           │ │ └─656 /usr/lib/snapd/snapd
+           │ ├─ssh.service
+           │ │ └─2162 "sshd: /usr/sbin/sshd -D -o AuthorizedKeysCommand /usr/share/ec2-instance-connect/eic_run_authorized_keys %u %f -o AuthorizedKeysCommandUser ec2-instance-connect [listener] 0 of 10-100 startups"
+           │ ├─system-getty.slice
+           │ │ └─getty@tty1.service
+           │ │   └─808 /sbin/agetty -o "-p -- \\u" --noclear - linux
+           │ ├─system-serial\x2dgetty.slice
+           │ │ └─serial-getty@ttyS0.service
+           │ │   └─712 /sbin/agetty -o "-p -- \\u" --keep-baud 115200,57600,38400,9600 - vt220
+           │ ├─systemd-journald.service
+           │ │ └─126 /usr/lib/systemd/systemd-journald
+           │ ├─systemd-logind.service
+           │ │ └─658 /usr/lib/systemd/systemd-logind
+           │ ├─systemd-networkd.service
+           │ │ └─529 /usr/lib/systemd/systemd-networkd
+           │ ├─systemd-resolved.service
+           │ │ └─331 /usr/lib/systemd/systemd-resolved
+           │ ├─systemd-udevd.service
+           │ │ └─udev
+           │ │   └─193 /usr/lib/systemd/systemd-udevd
+           │ ├─udisks2.service
+           │ │ └─668 /usr/libexec/udisks2/udisksd
+           │ └─unattended-upgrades.service
+           │   └─832 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
+           └─user.slice
+             └─user-1100.slice
+               ├─session-6.scope
+               │ ├─2960 "sshd: isucon [priv]"
+               │ ├─3041 "sshd: isucon@pts/0"
+               │ ├─3044 -bash
+               │ ├─4842 /bin/bash scripts/commit-info.sh
+               │ ├─4861 sudo systemctl status
+               │ ├─4863 sudo systemctl status
+               │ └─4864 systemctl status
+               ├─session-7.scope
+               │ ├─4186 "sshd: isucon [priv]"
+               │ ├─4232 "sshd: isucon@notty"
+               │ └─4233 python3 -c "import sys, os; verbosity=0; sys.stdin = os.fdopen(0, \"rb\"); exec(compile(sys.stdin.read(1702), \"assembler.py\", \"exec\")); sys.exit(98);"
+               └─user@1100.service
+                 └─init.scope
+                   ├─2686 /usr/lib/systemd/systemd --user
+                   └─2687 "(sd-pam)"
