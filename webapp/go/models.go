@@ -11,8 +11,8 @@ type Chair struct {
 	Name              string       `db:"name"`
 	Model             string       `db:"model"`
 	IsActive          bool         `db:"is_active"`
-	Latitude          int          `db:"latitude"`
-	Longitude         int          `db:"longitude"`
+	Latitude          *int         `db:"latitude"`
+	Longitude         *int         `db:"longitude"`
 	TotalDistance     int          `db:"total_distance"`
 	LocationUpdatedAt sql.NullTime `db:"location_updated_at"`
 	AccessToken       string       `db:"access_token"`

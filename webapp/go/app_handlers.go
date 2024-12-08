@@ -910,8 +910,8 @@ func appGetNearbyChairs(w http.ResponseWriter, r *http.Request) {
 			Name:  chair.Name,
 			Model: chair.Model,
 			CurrentCoordinate: Coordinate{
-				Latitude:  chair.Latitude,
-				Longitude: chair.Longitude,
+				Latitude:  *chair.Latitude,
+				Longitude: *chair.Longitude,
 			},
 		})
 	}
