@@ -1,0 +1,120 @@
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           2  0.0  0.0      0     0 ?        S    01:01   0:00 [kthreadd]
+root           3  0.0  0.0      0     0 ?        S    01:01   0:00  \_ [pool_workqueue_release]
+root           4  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/R-rcu_g]
+root           5  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/R-rcu_p]
+root           6  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/R-slub_]
+root           7  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/R-netns]
+root           9  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/0:0H-events_highpri]
+root          12  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/R-mm_pe]
+root          13  0.0  0.0      0     0 ?        I    01:01   0:00  \_ [rcu_tasks_rude_kthread]
+root          14  0.0  0.0      0     0 ?        I    01:01   0:00  \_ [rcu_tasks_trace_kthread]
+root          15  0.0  0.0      0     0 ?        S    01:01   0:00  \_ [ksoftirqd/0]
+root          16  0.0  0.0      0     0 ?        I    01:01   0:00  \_ [rcu_sched]
+root          17  0.0  0.0      0     0 ?        S    01:01   0:00  \_ [migration/0]
+root          18  0.0  0.0      0     0 ?        S    01:01   0:00  \_ [idle_inject/0]
+root          19  0.0  0.0      0     0 ?        S    01:01   0:00  \_ [cpuhp/0]
+root          20  0.0  0.0      0     0 ?        S    01:01   0:00  \_ [cpuhp/1]
+root          21  0.0  0.0      0     0 ?        S    01:01   0:00  \_ [idle_inject/1]
+root          22  0.0  0.0      0     0 ?        S    01:01   0:00  \_ [migration/1]
+root          23  0.0  0.0      0     0 ?        S    01:01   0:00  \_ [ksoftirqd/1]
+root          25  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/1:0H-events_highpri]
+root          26  0.0  0.0      0     0 ?        S    01:01   0:00  \_ [kdevtmpfs]
+root          27  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/R-inet_]
+root          29  0.0  0.0      0     0 ?        S    01:01   0:00  \_ [kauditd]
+root          31  0.0  0.0      0     0 ?        S    01:01   0:00  \_ [khungtaskd]
+root          32  0.0  0.0      0     0 ?        S    01:01   0:00  \_ [oom_reaper]
+root          34  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/R-write]
+root          35  0.0  0.0      0     0 ?        S    01:01   0:00  \_ [kcompactd0]
+root          36  0.0  0.0      0     0 ?        SN   01:01   0:00  \_ [ksmd]
+root          37  0.0  0.0      0     0 ?        SN   01:01   0:00  \_ [khugepaged]
+root          38  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/R-kinte]
+root          39  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/R-kbloc]
+root          40  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/R-blkcg]
+root          41  0.0  0.0      0     0 ?        S    01:01   0:00  \_ [irq/9-acpi]
+root          42  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/R-tpm_d]
+root          43  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/R-ata_s]
+root          44  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/R-md]
+root          45  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/R-md_bi]
+root          46  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/R-edac-]
+root          47  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/R-devfr]
+root          48  0.0  0.0      0     0 ?        S    01:01   0:00  \_ [watchdogd]
+root          49  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/1:1H-kblockd]
+root          50  0.0  0.0      0     0 ?        S    01:01   0:00  \_ [kswapd0]
+root          51  0.0  0.0      0     0 ?        S    01:01   0:00  \_ [ecryptfs-kthread]
+root          52  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/R-kthro]
+root          53  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/R-acpi_]
+root          54  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/R-nvme-]
+root          55  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/R-nvme-]
+root          56  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/R-nvme-]
+root          57  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/R-nvme-]
+root          59  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/R-mld]
+root          60  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/R-ipv6_]
+root          67  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/R-kstrp]
+root          69  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/u5:0]
+root          82  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/R-charg]
+root          83  0.0  0.0      0     0 ?        S    01:01   0:00  \_ [jbd2/nvme0n1p1-8]
+root          84  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/R-ext4-]
+root          85  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/0:1H-kblockd]
+root         156  0.0  0.0      0     0 ?        I    01:01   0:00  \_ [kworker/0:5-cgroup_destroy]
+root         170  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/R-kmpat]
+root         171  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/R-kmpat]
+root         199  0.0  0.0      0     0 ?        S    01:01   0:00  \_ [psimon]
+root         250  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/R-crypt]
+root         258  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/R-ena]
+root         298  0.0  0.0      0     0 ?        S    01:01   0:00  \_ [jbd2/nvme0n1p16-8]
+root         299  0.0  0.0      0     0 ?        I<   01:01   0:00  \_ [kworker/R-ext4-]
+root        6593  0.0  0.0      0     0 ?        I    01:16   0:00  \_ [kworker/0:0-events]
+root        7019  0.0  0.0      0     0 ?        I    01:17   0:00  \_ [kworker/u4:1-events_power_efficient]
+root       13615  0.0  0.0      0     0 ?        I    01:37   0:00  \_ [kworker/u4:3-events_unbound]
+root       17906  0.0  0.0      0     0 ?        I    01:50   0:00  \_ [kworker/u4:0-events_power_efficient]
+root       17912  0.0  0.0      0     0 ?        I    01:50   0:00  \_ [kworker/1:0-cgroup_destroy]
+root       21217  0.0  0.0      0     0 ?        I    02:00   0:00  \_ [kworker/1:1-rcu_gp]
+root       23057  0.0  0.0      0     0 ?        I    02:05   0:00  \_ [kworker/1:2-events]
+root       24150  0.0  0.0      0     0 ?        I    02:06   0:00  \_ [kworker/u4:2]
+root       24336  0.0  0.0      0     0 ?        I    02:06   0:00  \_ [kworker/0:1-rcu_gp]
+root       24337  0.0  0.0      0     0 ?        I    02:06   0:00  \_ [kworker/0:2-events]
+root       24705  0.0  0.0      0     0 ?        S    02:07   0:00  \_ [psimon]
+root       24708  0.0  0.0      0     0 ?        I    02:07   0:00  \_ [kworker/1:3-events]
+root           1  0.0  0.3  22796 13808 ?        Ss   01:01   0:02 /sbin/init
+root         125  0.0  0.5  50692 20608 ?        S<s  01:01   0:02 /usr/lib/systemd/systemd-journald
+root         183  0.0  0.6 288952 27136 ?        SLsl 01:01   0:00 /sbin/multipathd -d -s
+root         192  0.0  0.2  26468  8108 ?        Ss   01:01   0:00 /usr/lib/systemd/systemd-udevd
+systemd+     342  0.0  0.3  21588 12800 ?        Ss   01:01   0:00 /usr/lib/systemd/systemd-resolved
+systemd+     540  0.0  0.2  22396  9728 ?        Ss   01:01   0:00 /usr/lib/systemd/systemd-networkd
+root         633  0.0  0.0   2720  1920 ?        Ss   01:01   0:00 /usr/sbin/acpid
+root         637  0.0  0.0   7224  2688 ?        Ss   01:01   0:00 /usr/sbin/cron -f -P
+message+     638  0.0  0.1   9888  5376 ?        Ss   01:01   0:00 @dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+root         647  0.0  0.1  82920  4096 ?        Ssl  01:01   0:00 /usr/sbin/irqbalance
+root         650  0.0  0.5  32456 20736 ?        Ss   01:01   0:00 /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
+polkitd      652  0.0  0.2 383076  9412 ?        Ssl  01:01   0:00 /usr/lib/polkit-1/polkitd --no-debug
+root         656  0.0  0.5 1833104 19936 ?       Ssl  01:01   0:00 /snap/amazon-ssm-agent/9881/amazon-ssm-agent
+root        1122  0.0  0.7 1916404 28476 ?       Sl   01:02   0:01  \_ /snap/amazon-ssm-agent/9881/ssm-agent-worker
+root         661  0.0  0.2  18028  8704 ?        Ss   01:01   0:00 /usr/lib/systemd/systemd-logind
+root         663  0.0  0.3 468984 13568 ?        Ssl  01:01   0:00 /usr/libexec/udisks2/udisksd
+root         683  0.0  0.0   6148  2176 ttyS0    Ss+  01:01   0:00 /sbin/agetty -o -p -- \u --keep-baud 115200,57600,38400,9600 - vt220
+root         702  0.0  0.5 109980 23040 ?        Ssl  01:01   0:00 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
+root         713  0.0  0.0   6104  2048 tty1     Ss+  01:01   0:00 /sbin/agetty -o -p -- \u --noclear - linux
+syslog       719  0.0  0.1 222508  6272 ?        Ssl  01:01   0:00 /usr/sbin/rsyslogd -n -iNONE
+root         737  0.0  0.3 318144 12544 ?        Ssl  01:01   0:00 /usr/sbin/ModemManager
+root         739  0.0  0.0  11540  2112 ?        Ss   01:01   0:00 nginx: master process /usr/sbin/nginx -g daemon on; master_process on;
+www-data     740  0.2  0.2  13264  8256 ?        S    01:01   0:08  \_ nginx: worker process
+www-data     741  0.2  0.2  13264  8384 ?        S    01:01   0:08  \_ nginx: worker process
+_chrony      745  0.0  0.0  19388  3652 ?        S    01:01   0:00 /usr/sbin/chronyd -F 1
+_chrony      782  0.0  0.0  11060  2272 ?        S    01:01   0:00  \_ /usr/sbin/chronyd -F 1
+mysql       1011  0.3 10.5 1787196 409200 ?      Ssl  01:01   0:12 /usr/sbin/mysqld
+isucon      1077  0.0  0.3 1604876 12332 ?       Ssl  01:01   0:03 /home/isucon/webapp/go/isuride
+isucon      1078  0.0  0.0   2800  1792 ?        Ss   01:01   0:01 /bin/sh -c while true; do curl -s https://isuride.xiv.isucon.net/api/internal/matching; sleep $ISUCON_MATCHING_INTERVAL; done
+isucon     25132  0.0  0.0   6112  1792 ?        S    02:08   0:00  \_ sleep 0.5
+isucon      1079  0.0  0.1 1526848 6144 ?        Ssl  01:01   0:00 /home/isucon/webapp/payment_mock/payment_mock
+root        2201  0.0  0.2  12020  8064 ?        Ss   01:05   0:00 sshd: /usr/sbin/sshd -D -o AuthorizedKeysCommand /usr/share/ec2-instance-connect/eic_run_authorized_keys %u %f -o AuthorizedKeysCommandUser ec2-instance-connect [listener] 0 of 10-100 startups
+root       24699  0.0  0.2  14744  8568 ?        Ss   02:07   0:00  \_ sshd: isucon [priv]
+isucon     24777  0.0  0.1  14972  7080 ?        S    02:07   0:00      \_ sshd: isucon@pts/0
+isucon     24778  0.0  0.1   9192  5376 pts/0    Ss   02:07   0:00          \_ -bash
+isucon     25100  0.0  0.0   7740  3584 pts/0    S+   02:08   0:00              \_ /bin/bash scripts/commit-info.sh
+root       25140  0.0  0.1  17136  6912 pts/0    S+   02:08   0:00                  \_ sudo ps aufx
+root       25142  0.0  0.0  17136  2384 pts/1    Ss   02:08   0:00                      \_ sudo ps aufx
+root       25143  0.0  0.1  11320  4352 pts/1    R+   02:08   0:00                          \_ ps aufx
+root        3108  0.0  0.8 1395024 32412 ?       Ssl  01:07   0:02 /usr/lib/snapd/snapd
+isucon     24707  0.1  0.2  20264 11520 ?        Ss   02:07   0:00 /usr/lib/systemd/systemd --user
+isucon     24709  0.0  0.0  21140  3512 ?        S    02:07   0:00  \_ (sd-pam)

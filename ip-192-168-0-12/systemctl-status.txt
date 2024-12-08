@@ -1,0 +1,87 @@
+● ip-192-168-0-12
+    State: running
+    Units: 436 loaded (incl. loaded aliases)
+     Jobs: 0 queued
+   Failed: 0 units
+    Since: Sun 2024-12-08 01:01:36 UTC; 1h 6min ago
+  systemd: 255.4-1ubuntu8.4
+   CGroup: /
+           ├─init.scope
+           │ └─1 /sbin/init
+           ├─system.slice
+           │ ├─ModemManager.service
+           │ │ └─737 /usr/sbin/ModemManager
+           │ ├─acpid.service
+           │ │ └─633 /usr/sbin/acpid
+           │ ├─chrony.service
+           │ │ ├─745 /usr/sbin/chronyd -F 1
+           │ │ └─782 /usr/sbin/chronyd -F 1
+           │ ├─cron.service
+           │ │ └─637 /usr/sbin/cron -f -P
+           │ ├─dbus.service
+           │ │ └─638 @dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+           │ ├─irqbalance.service
+           │ │ └─647 /usr/sbin/irqbalance
+           │ ├─isuride-go.service
+           │ │ └─1077 /home/isucon/webapp/go/isuride
+           │ ├─isuride-matcher.service
+           │ │ ├─ 1078 /bin/sh -c "while true; do curl -s https://isuride.xiv.isucon.net/api/internal/matching; sleep \$ISUCON_MATCHING_INTERVAL; done"
+           │ │ └─25125 sleep 0.5
+           │ ├─isuride-payment_mock.service
+           │ │ └─1079 /home/isucon/webapp/payment_mock/payment_mock
+           │ ├─multipathd.service
+           │ │ └─183 /sbin/multipathd -d -s
+           │ ├─mysql.service
+           │ │ └─1011 /usr/sbin/mysqld
+           │ ├─networkd-dispatcher.service
+           │ │ └─650 /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
+           │ ├─nginx.service
+           │ │ ├─739 "nginx: master process /usr/sbin/nginx -g daemon on; master_process on;"
+           │ │ ├─740 "nginx: worker process"
+           │ │ └─741 "nginx: worker process"
+           │ ├─polkit.service
+           │ │ └─652 /usr/lib/polkit-1/polkitd --no-debug
+           │ ├─rsyslog.service
+           │ │ └─719 /usr/sbin/rsyslogd -n -iNONE
+           │ ├─snap.amazon-ssm-agent.amazon-ssm-agent.service
+           │ │ ├─ 656 /snap/amazon-ssm-agent/9881/amazon-ssm-agent
+           │ │ └─1122 /snap/amazon-ssm-agent/9881/ssm-agent-worker
+           │ ├─snapd.service
+           │ │ └─3108 /usr/lib/snapd/snapd
+           │ ├─ssh.service
+           │ │ └─2201 "sshd: /usr/sbin/sshd -D -o AuthorizedKeysCommand /usr/share/ec2-instance-connect/eic_run_authorized_keys %u %f -o AuthorizedKeysCommandUser ec2-instance-connect [listener] 0 of 10-100 startups"
+           │ ├─system-getty.slice
+           │ │ └─getty@tty1.service
+           │ │   └─713 /sbin/agetty -o "-p -- \\u" --noclear - linux
+           │ ├─system-serial\x2dgetty.slice
+           │ │ └─serial-getty@ttyS0.service
+           │ │   └─683 /sbin/agetty -o "-p -- \\u" --keep-baud 115200,57600,38400,9600 - vt220
+           │ ├─systemd-journald.service
+           │ │ └─125 /usr/lib/systemd/systemd-journald
+           │ ├─systemd-logind.service
+           │ │ └─661 /usr/lib/systemd/systemd-logind
+           │ ├─systemd-networkd.service
+           │ │ └─540 /usr/lib/systemd/systemd-networkd
+           │ ├─systemd-resolved.service
+           │ │ └─342 /usr/lib/systemd/systemd-resolved
+           │ ├─systemd-udevd.service
+           │ │ └─udev
+           │ │   └─192 /usr/lib/systemd/systemd-udevd
+           │ ├─udisks2.service
+           │ │ └─663 /usr/libexec/udisks2/udisksd
+           │ └─unattended-upgrades.service
+           │   └─702 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
+           └─user.slice
+             └─user-1100.slice
+               ├─session-13.scope
+               │ ├─24699 "sshd: isucon [priv]"
+               │ ├─24777 "sshd: isucon@pts/0"
+               │ ├─24778 -bash
+               │ ├─25100 /bin/bash scripts/commit-info.sh
+               │ ├─25121 sudo systemctl status
+               │ ├─25123 sudo systemctl status
+               │ └─25124 systemctl status
+               └─user@1100.service
+                 └─init.scope
+                   ├─24707 /usr/lib/systemd/systemd --user
+                   └─24709 "(sd-pam)"
