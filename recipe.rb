@@ -48,7 +48,7 @@ end
 ###
 
 execute 'install netdata' do
-	command 'bash -c "bash <(curl -Ss https://my-netdata.io/kickstart.sh) all --non-interactive --stable-channel --no-updates --disable-telemetry"'
+	command 'bash -c "bash <(curl -SLs https://my-netdata.io/kickstart.sh) all --non-interactive --stable-channel --no-updates --disable-telemetry"'
 	not_if "systemctl list-unit-files | grep '^netdata.service'"
 end
 
