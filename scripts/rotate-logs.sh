@@ -15,7 +15,3 @@ for f in /var/log/nginx/{access,error}.log /var/log/mysql/mysql-slow.log; do
     gzip "$output"
   fi
 done
-
-if sudo systemctl is-active "mysql.service" >/dev/null; then
-  sudo mysql -uroot -e "TRUNCATE TABLE performance_schema.events_statements_summary_by_digest;"
-fi
