@@ -14,5 +14,7 @@ ExecStop=/bin/kill -s QUIT $MAINPID
 Restart=on-failure
 RestartSec=5
 
+StartLimitInterval=0
+
 [Install]
 WantedBy=multi-user.target
