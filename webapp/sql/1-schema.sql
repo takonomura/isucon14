@@ -76,10 +76,29 @@ ADD COLUMN total_distance INTEGER DEFAULT 0 COMMENT '総距離' AFTER longitude;
 -- ) distance_table
 -- ON c.id = distance_table.chair_id
 -- SET c.total_distance = IFNULL(distance_table.total_distance, 0);
+ALTER TABLE chairs
+ADD COLUMN is_free TINYINT(1) NOT NULL DEFAULT 0 COMMENT 'マッチ中かどうか' AFTER is_active;
+-- UPDATE chairs c
+-- LEFT JOIN (
+--     SELECT
+--         r.chair_id,
+--         MAX(CASE WHEN rs.status = 'COMPLETED' THEN 1 ELSE 0 END) AS has_completed_ride
+--     FROM rides r
+--     LEFT JOIN ride_statuses rs ON r.id = rs.ride_id
+--     GROUP BY r.chair_id
+-- ) ride_data ON c.id = ride_data.chair_id
+-- SET c.is_free = CASE
+--     WHEN ride_data.chair_id IS NULL OR ride_data.has_completed_ride = 1 THEN 1
+--     ELSE 0
+-- END;
+ALTER TABLE chairs
+ADD COLUMN is_matchable TINYINT(1) AS (is_active AND is_free) STORED NOT NULL COMMENT 'マッチ可能かどうか';
 
 CREATE INDEX idx_chairs_created_at ON chairs (created_at);
 
 CREATE INDEX idx_chairs_owner_id_created_at ON chairs (owner_id, created_at DESC);
+
+CREATE INDEX idx_is_matchable ON chairs (is_matchable);
 
 DROP TABLE IF EXISTS chair_locations;
 CREATE TABLE chair_locations
