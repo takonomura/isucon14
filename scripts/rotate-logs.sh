@@ -17,5 +17,5 @@ for f in /var/log/nginx/{access,error}.log /var/log/mysql/mysql-slow.log; do
 done
 
 if sudo systemctl is-active "mysql.service" >/dev/null; then
-  sudo mysql -uroot "TRUNCATE performance_schema.events_statements_summary_by_digest;"
+  sudo mysql -uroot "TRUNCATE TABLE performance_schema.events_statements_summary_by_digest;"
 fi
