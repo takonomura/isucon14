@@ -11,7 +11,7 @@ MItamae::ResourceContext.class_eval do
 	end
 end
 
-service 'isucon.go.service' do
+service 'isuride-go.service' do
 	action %i[enable start]
 end
 
@@ -31,7 +31,7 @@ end
 {
 	'nginx' => '/etc/nginx/nginx.conf',
 	'mysql' => '/etc/mysql/mysql.conf.d/mysqld.cnf',
-	'isucon.go.service' => '/etc/systemd/system/isucon.go.service',
+	'isuride-go.service' => '/etc/systemd/system/isuride-go.service',
 }.each do |service, conf|
 	conf_source = "./#{HOST}/#{File.basename conf}"
 	next unless File.file? conf_source
