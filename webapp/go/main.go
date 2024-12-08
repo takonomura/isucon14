@@ -60,7 +60,7 @@ func setup() http.Handler {
 	dbConfig.ParseTime = true
 	dbConfig.InterpolateParams = true
 
-	_db, err := sqlx.Connect("mysql", dbConfig.FormatDSN())
+	_db, err := sqlx.Open("mysql", dbConfig.FormatDSN())
 	if err != nil {
 		panic(err)
 	}
