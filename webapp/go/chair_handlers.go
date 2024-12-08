@@ -257,7 +257,10 @@ func chairGetNotification(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	retryAfterMs := 500
+
 	if yetSentRideStatus.ID != "" {
+		retryAfterMs = 30
 		_, err := tx.ExecContext(ctx, `UPDATE ride_statuses SET chair_sent_at = CURRENT_TIMESTAMP(6) WHERE id = ?`, yetSentRideStatus.ID)
 		if err != nil {
 			writeError(w, http.StatusInternalServerError, err)
@@ -287,7 +290,7 @@ func chairGetNotification(w http.ResponseWriter, r *http.Request) {
 			},
 			Status: status,
 		},
-		RetryAfterMs: 30,
+		RetryAfterMs: retryAfterMs,
 	})
 }
 
