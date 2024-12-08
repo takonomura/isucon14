@@ -51,10 +51,10 @@ select
 from
   performance_schema.events_statements_summary_by_digest
 where
-  `SCHEMA_NAME` != 'performance_schema'
-  AND `SCHEMA_NAME` IS NOT NULL
+  SCHEMA_NAME != 'performance_schema'
+  AND SCHEMA_NAME IS NOT NULL
 order by
   SUM_TIMER_WAIT desc
 limit
-  20
+  20\G
 EOF
