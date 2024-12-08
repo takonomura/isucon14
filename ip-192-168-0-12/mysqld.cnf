@@ -28,8 +28,8 @@ user		= mysql
 #
 # Instead of skip-networking the default is now to listen only on
 # localhost which is more compatible and is not less secure.
-bind-address		= 127.0.0.1
-mysqlx-bind-address	= 127.0.0.1
+bind-address		= 192.168.0.12
+mysqlx-bind-address	= 192.168.0.12
 #
 # * Fine Tuning
 #

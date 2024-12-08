@@ -1,6 +1,10 @@
 HOST = node[:hostname]
 USER = 'isucon'
 
+isu01 = 'ip-192-168-0-11'
+isu02 = 'ip-192-168-0-12'
+isu03 = 'ip-192-168-0-13'
+
 MItamae::ResourceContext.class_eval do
 	def enable_if(b)
 		if b
@@ -12,15 +16,15 @@ MItamae::ResourceContext.class_eval do
 end
 
 service 'isuride-go.service' do
-	action %i[enable start]
+	action enable_if(HOST == isu01)
 end
 
 service 'mysql' do
-	action %i[enable start]
+	action enable_if(HOST == isu02)
 end
 
 service 'nginx' do
-	action %i[enable start]
+	action enable_if(HOST == isu01)
 end
 
 #package 'redis'
