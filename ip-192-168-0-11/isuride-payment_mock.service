@@ -1,8 +1,6 @@
 [Unit]
 Description=isuride-payment_mock
 After=syslog.target
-After=mysql.service
-Requires=mysql.service
 
 [Service]
 WorkingDirectory=/home/isucon/webapp/payment_mock
