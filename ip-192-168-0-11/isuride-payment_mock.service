@@ -1,0 +1,19 @@
+[Unit]
+Description=isuride-payment_mock
+After=syslog.target
+After=mysql.service
+Requires=mysql.service
+
+[Service]
+WorkingDirectory=/home/isucon/webapp/payment_mock
+
+User=isucon
+Group=isucon
+ExecStart=/home/isucon/webapp/payment_mock/payment_mock
+ExecStop=/bin/kill -s QUIT $MAINPID
+
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
