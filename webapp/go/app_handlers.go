@@ -316,7 +316,7 @@ func appPostRides(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if ride.Evaluation != nil {
+	if ride.Evaluation == nil {
 		writeError(w, http.StatusConflict, errors.New("ride already exists"))
 		return
 	}
