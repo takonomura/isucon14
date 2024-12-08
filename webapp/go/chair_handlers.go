@@ -226,7 +226,7 @@ func chairGetNotification(w http.ResponseWriter, r *http.Request) {
 	}
 	ride := rides[0]
 
-	query, args, err := sqlx.In("SELECT * FROM ride_statuses WHERE ride_id = ? AND chair_sent_at IS NULL ORDER BY created_at ASC LIMIT 1", rideIDs)
+	query, args, err := sqlx.In("SELECT * FROM ride_statuses WHERE ride_id IN (?) AND chair_sent_at IS NULL ORDER BY created_at ASC LIMIT 1", rideIDs)
 	if err != nil {
 		writeError(w, http.StatusInternalServerError, err)
 		return
