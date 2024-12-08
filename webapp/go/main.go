@@ -65,6 +65,7 @@ func setup() http.Handler {
 		panic(err)
 	}
 	db = _db
+	initDB(db.DB)
 
 	mux := chi.NewRouter()
 	mux.Use(middleware.Recoverer)
