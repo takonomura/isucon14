@@ -13,7 +13,7 @@ rotate-logs:
 	@scripts/rotate-logs.sh
 
 restart-app:
-	@scripts/restart.sh isucon.go.service
+	@scripts/restart.sh isuride-go.service
 
 restart-nginx:
 	@scripts/restart.sh nginx.service
