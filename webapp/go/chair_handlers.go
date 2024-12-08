@@ -381,6 +381,8 @@ func chairGetNotificationSSE(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Cache-Control", "no-cache")
 	w.Header().Set("Connection", "keep-alive")
 
+	defer slog.Info("closed connection")
+
 	writeMessage := func(v interface{}) error {
 		buf, err := json.Marshal(v)
 		if err != nil {
