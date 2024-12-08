@@ -871,12 +871,28 @@ func appGetNearbyChairs(w http.ResponseWriter, r *http.Request) {
 	}
 	defer tx.Rollback()
 
-	chairs := []Chair{}
+	var chairLocations []ChairLocation
 	err = tx.SelectContext(
 		ctx,
-		&chairs,
-		`SELECT * FROM chairs`,
+		&chairLocations,
+		"SELECT * FROM chair_locations WHERE ABS(latitude - ?) + ABS(longitude - ?) <= 50",
+		coordinate.Latitude, coordinate.Longitude,
 	)
+
+	locationByChairID := make(map[string]ChairLocation, len(chairLocations))
+	chairIDs := make([]string, len(chairLocations))
+	for i, c := range chairLocations {
+		locationByChairID[c.ChairID] = c
+		chairIDs[i] = c.ChairID
+	}
+
+	query, args, err := sqlx.In("SELECT * FROM chairs WHERE id IN (?) AND is_active = TRUE", chairIDs)
+	if err != nil {
+		writeError(w, http.StatusInternalServerError, err)
+		return
+	}
+	var chairs []Chair
+	err = tx.SelectContext(ctx, &chairs, query, args...)
 	if err != nil {
 		writeError(w, http.StatusInternalServerError, err)
 		return
@@ -884,10 +900,6 @@ func appGetNearbyChairs(w http.ResponseWriter, r *http.Request) {
 
 	nearbyChairs := []appGetNearbyChairsResponseChair{}
 	for _, chair := range chairs {
-		if !chair.IsActive {
-			continue
-		}
-
 		rides := []*Ride{}
 		if err := tx.SelectContext(ctx, &rides, `SELECT * FROM rides WHERE chair_id = ? ORDER BY created_at DESC`, chair.ID); err != nil {
 			writeError(w, http.StatusInternalServerError, err)
@@ -912,48 +924,21 @@ func appGetNearbyChairs(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// 最新の位置情報を取得
-		chairLocation := &ChairLocation{}
-		err = tx.GetContext(
-			ctx,
-			chairLocation,
-			`SELECT * FROM chair_locations WHERE chair_id = ? ORDER BY created_at DESC LIMIT 1`,
-			chair.ID,
-		)
-		if err != nil {
-			if errors.Is(err, sql.ErrNoRows) {
-				continue
-			}
-			writeError(w, http.StatusInternalServerError, err)
-			return
-		}
-
-		if calculateDistance(coordinate.Latitude, coordinate.Longitude, chairLocation.Latitude, chairLocation.Longitude) <= distance {
-			nearbyChairs = append(nearbyChairs, appGetNearbyChairsResponseChair{
-				ID:    chair.ID,
-				Name:  chair.Name,
-				Model: chair.Model,
-				CurrentCoordinate: Coordinate{
-					Latitude:  chairLocation.Latitude,
-					Longitude: chairLocation.Longitude,
-				},
-			})
-		}
-	}
-
-	retrievedAt := &time.Time{}
-	err = tx.GetContext(
-		ctx,
-		retrievedAt,
-		`SELECT CURRENT_TIMESTAMP(6)`,
-	)
-	if err != nil {
-		writeError(w, http.StatusInternalServerError, err)
-		return
+		chairLocation := locationByChairID[chair.ID]
+		nearbyChairs = append(nearbyChairs, appGetNearbyChairsResponseChair{
+			ID:    chair.ID,
+			Name:  chair.Name,
+			Model: chair.Model,
+			CurrentCoordinate: Coordinate{
+				Latitude:  chairLocation.Latitude,
+				Longitude: chairLocation.Longitude,
+			},
+		})
 	}
 
 	writeJSON(w, http.StatusOK, &appGetNearbyChairsResponse{
 		Chairs:      nearbyChairs,
-		RetrievedAt: retrievedAt.UnixMilli(),
+		RetrievedAt: time.Now().UnixMilli(),
 	})
 }
 
