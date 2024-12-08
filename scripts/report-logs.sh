@@ -21,6 +21,18 @@ echo_comment() {
 		echo
 		echo '</details>'
 	fi
+	if sudo systemctl is-active "mysql.service" >/dev/null; then
+		echo
+		echo '##### MySQL Performance Stats'
+		echo
+		echo '<details>'
+		echo
+		echo '```'
+		echo "$(make sql-stats -s)"
+		echo '```'
+		echo
+		echo '</details>'
+	fi
 	if sudo test -f /var/log/mysql/mysql-slow.log; then
 		echo
 		echo '##### MySQL Slow Queries Log'
