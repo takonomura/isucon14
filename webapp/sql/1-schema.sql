@@ -61,7 +61,7 @@ ADD COLUMN location_updated_at DATETIME(6) COMMENT '位置情報の更新日時'
 --     c.longitude = latest_location.longitude,
 --     c.location_updated_at = latest_location.location_updated_at;
 ALTER TABLE chairs
-ADD COLUMN total_distance INTEGER DEFAULT 0 COMMENT '総距離' AFTER longitude;
+ADD COLUMN total_distance NOT NULL INTEGER DEFAULT 0 COMMENT '総距離' AFTER longitude;
 -- UPDATE chairs c
 -- LEFT JOIN (
 --     SELECT chair_id,
@@ -77,7 +77,7 @@ ADD COLUMN total_distance INTEGER DEFAULT 0 COMMENT '総距離' AFTER longitude;
 -- ON c.id = distance_table.chair_id
 -- SET c.total_distance = IFNULL(distance_table.total_distance, 0);
 ALTER TABLE chairs
-ADD COLUMN is_free TINYINT(1) NOT NULL DEFAULT 0 COMMENT 'マッチ中かどうか' AFTER is_active;
+ADD COLUMN is_free TINYINT(1) NOT NULL DEFAULT 1 COMMENT 'マッチ中かどうか' AFTER is_active;
 -- UPDATE chairs c
 -- LEFT JOIN (
 --     SELECT
