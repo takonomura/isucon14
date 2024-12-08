@@ -99,6 +99,7 @@ CREATE INDEX idx_chairs_created_at ON chairs (created_at);
 CREATE INDEX idx_chairs_owner_id_created_at ON chairs (owner_id, created_at DESC);
 
 CREATE INDEX idx_is_matchable ON chairs (is_matchable);
+CREATE INDEX idx_chairs_access_token ON chairs (access_token);
 
 DROP TABLE IF EXISTS chair_locations;
 CREATE TABLE chair_locations
