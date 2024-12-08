@@ -619,6 +619,7 @@ func chairPostRideStatus(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	signalCharNotification(chair.ID)
+	signalAppNotification(ride.UserID)
 
 	w.WriteHeader(http.StatusNoContent)
 }

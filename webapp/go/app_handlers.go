@@ -3,7 +3,9 @@ package main
 import (
 	"context"
 	"database/sql"
+	"encoding/json"
 	"errors"
+	"log/slog"
 	"net/http"
 	"strconv"
 	"time"
@@ -420,6 +422,8 @@ func appPostRides(w http.ResponseWriter, r *http.Request) {
 		RideID: rideID,
 		Fare:   fare,
 	})
+
+	signalAppNotification(user.ID)
 }
 
 type appPostRidesEstimatedFareRequest struct {
@@ -620,6 +624,7 @@ func appPostRideEvaluatation(w http.ResponseWriter, r *http.Request) {
 	}
 
 	signalCharNotification(ride.ChairID.String)
+	signalAppNotification(ride.UserID)
 
 	writeJSON(w, http.StatusOK, &appPostRideEvaluationResponse{
 		CompletedAt: ride.UpdatedAt.UnixMilli(),
@@ -652,6 +657,276 @@ type appGetNotificationResponseChair struct {
 type appGetNotificationResponseChairStats struct {
 	TotalRidesCount    int     `json:"total_rides_count"`
 	TotalEvaluationAvg float64 `json:"total_evaluation_avg"`
+}
+
+type appNotificationProcess struct {
+	User       *User
+	Ride       Ride
+	LastRideID string
+
+	Chair *appGetNotificationResponseChair
+
+	FareRideID string
+	Fare       int
+}
+
+func (p *appNotificationProcess) getLastNotification(ctx context.Context) (*appGetNotificationResponseData, error) {
+	tx, err := db.Beginx()
+	if err != nil {
+		return nil, err
+	}
+	defer tx.Rollback()
+
+	ride := &Ride{}
+	if err := tx.GetContext(ctx, ride, `SELECT * FROM rides WHERE user_id = ? ORDER BY created_at DESC LIMIT 1`, p.User.ID); err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, nil
+		}
+		return nil, err
+	}
+
+	yetSentRideStatus := RideStatus{}
+	status := ""
+	if err := tx.GetContext(ctx, &yetSentRideStatus, `SELECT * FROM ride_statuses WHERE ride_id = ? AND app_sent_at IS NULL ORDER BY created_at ASC LIMIT 1`, ride.ID); err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			status, err = getLatestRideStatus(ctx, tx, ride.ID)
+			if err != nil {
+				return nil, err
+			}
+		} else {
+			return nil, err
+		}
+	} else {
+		status = yetSentRideStatus.Status
+	}
+
+	fare, err := calculateDiscountedFare(ctx, tx, p.User.ID, ride, ride.PickupLatitude, ride.PickupLongitude, ride.DestinationLatitude, ride.DestinationLongitude)
+	if err != nil {
+		return nil, err
+	}
+
+	data := &appGetNotificationResponseData{
+		RideID: ride.ID,
+		PickupCoordinate: Coordinate{
+			Latitude:  ride.PickupLatitude,
+			Longitude: ride.PickupLongitude,
+		},
+		DestinationCoordinate: Coordinate{
+			Latitude:  ride.DestinationLatitude,
+			Longitude: ride.DestinationLongitude,
+		},
+		Fare:      fare,
+		Status:    status,
+		CreatedAt: ride.CreatedAt.UnixMilli(),
+		UpdateAt:  ride.UpdatedAt.UnixMilli(),
+	}
+
+	if ride.ChairID.Valid {
+		chair := &Chair{}
+		if err := tx.GetContext(ctx, chair, `SELECT * FROM chairs WHERE id = ?`, ride.ChairID); err != nil {
+			return nil, err
+		}
+
+		stats, err := getChairStats(ctx, tx, chair.ID)
+		if err != nil {
+			return nil, err
+		}
+
+		data.Chair = &appGetNotificationResponseChair{
+			ID:    chair.ID,
+			Name:  chair.Name,
+			Model: chair.Model,
+			Stats: stats,
+		}
+		p.Chair = data.Chair
+	}
+
+	if yetSentRideStatus.ID != "" {
+		_, err := tx.ExecContext(ctx, `UPDATE ride_statuses SET app_sent_at = CURRENT_TIMESTAMP(6) WHERE id = ?`, yetSentRideStatus.ID)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	if status != "COMPLETED" {
+		p.Ride = *ride
+		p.FareRideID = ride.ID
+		p.Fare = fare
+	}
+
+	if err := tx.Commit(); err != nil {
+		return nil, err
+	}
+
+	return data, nil
+}
+
+func (p *appNotificationProcess) getUnsentNotification(ctx context.Context) (*appGetNotificationResponseData, error) {
+	if err := db.GetContext(ctx, &p.Ride, `SELECT * FROM rides WHERE user_id = ? ORDER BY created_at DESC LIMIT 1`, p.User.ID); err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, nil
+		}
+		return nil, err
+	}
+	if p.Ride.ID == p.LastRideID {
+		return nil, nil
+	}
+
+	tx, err := db.Beginx()
+	if err != nil {
+		return nil, err
+	}
+	defer tx.Rollback()
+
+	var status RideStatus
+	if err := tx.GetContext(ctx, &status, `SELECT * FROM ride_statuses WHERE ride_id = ? AND app_sent_at IS NULL ORDER BY created_at ASC LIMIT 1`, p.Ride.ID); err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, nil
+		} else {
+			return nil, err
+		}
+	}
+
+	_, err = tx.ExecContext(ctx, `UPDATE ride_statuses SET app_sent_at = CURRENT_TIMESTAMP(6) WHERE id = ?`, status.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	if p.FareRideID != p.Ride.ID {
+		fare, err := calculateDiscountedFare(ctx, tx, p.User.ID, &p.Ride, p.Ride.PickupLatitude, p.Ride.PickupLongitude, p.Ride.DestinationLatitude, p.Ride.DestinationLongitude)
+		if err != nil {
+			return nil, err
+		}
+		p.FareRideID = p.Ride.ID
+		p.Fare = fare
+	}
+	if p.Ride.ChairID.Valid && p.Chair.ID != p.Ride.ChairID.String {
+		chair := &Chair{}
+		if err := tx.GetContext(ctx, chair, `SELECT * FROM chairs WHERE id = ?`, p.Ride.ChairID); err != nil {
+			return nil, err
+		}
+
+		stats, err := getChairStats(ctx, tx, chair.ID)
+		if err != nil {
+			return nil, err
+		}
+
+		p.Chair = &appGetNotificationResponseChair{
+			ID:    chair.ID,
+			Name:  chair.Name,
+			Model: chair.Model,
+			Stats: stats,
+		}
+	}
+
+	if err := tx.Commit(); err != nil {
+		return nil, err
+	}
+
+	data := &appGetNotificationResponseData{
+		RideID: p.Ride.ID,
+		PickupCoordinate: Coordinate{
+			Latitude:  p.Ride.PickupLatitude,
+			Longitude: p.Ride.PickupLongitude,
+		},
+		DestinationCoordinate: Coordinate{
+			Latitude:  p.Ride.DestinationLatitude,
+			Longitude: p.Ride.DestinationLongitude,
+		},
+		Fare:      p.Fare,
+		Status:    status.Status,
+		CreatedAt: p.Ride.CreatedAt.UnixMilli(),
+		UpdateAt:  p.Ride.UpdatedAt.UnixMilli(),
+	}
+	if p.Ride.ChairID.Valid {
+		data.Chair = p.Chair
+	}
+
+	return data, nil
+}
+
+func appGetNotificationSSE(w http.ResponseWriter, r *http.Request) {
+	flusher, ok := w.(http.Flusher)
+	if !ok {
+		slog.Warn("fallback to older notification")
+		appGetNotification(w, r)
+		return
+	}
+
+	ctx := r.Context()
+	user := ctx.Value("user").(*User)
+
+	w.Header().Set("X-Accel-Buffering", "no")
+	w.Header().Set("Content-Type", "text/event-stream")
+	w.Header().Set("Cache-Control", "no-cache")
+	w.Header().Set("Connection", "keep-alive")
+
+	writeMessage := func(v interface{}) error {
+		buf, err := json.Marshal(v)
+		if err != nil {
+			return err
+		}
+		if _, err := w.Write([]byte("data: ")); err != nil {
+			return err
+		}
+		if _, err := w.Write(buf); err != nil {
+			return err
+		}
+		if _, err := w.Write([]byte("\n\n")); err != nil {
+			return err
+		}
+		flusher.Flush()
+		return nil
+	}
+
+	p := appNotificationProcess{
+		User: user,
+	}
+
+	data, err := p.getLastNotification(ctx)
+	if err != nil {
+		writeError(w, http.StatusInternalServerError, err)
+		return
+	}
+	if err := writeMessage(data); err != nil {
+		writeError(w, http.StatusInternalServerError, err)
+		return
+	}
+
+	ch := make(chan struct{}, 1)
+	registerAppNotificationSignalHandler(user.ID, ch)
+	defer unregisterAppNotificationSignalHandler(user.ID, ch)
+
+	for {
+		select {
+		case <-ctx.Done():
+			return
+		case <-time.After(1 * time.Second):
+			data, err := p.getUnsentNotification(ctx)
+			if err != nil {
+				writeError(w, http.StatusInternalServerError, err)
+				return
+			}
+			if data != nil {
+				if err := writeMessage(data); err != nil {
+					writeError(w, http.StatusInternalServerError, err)
+					return
+				}
+			}
+		case <-ch:
+			data, err := p.getUnsentNotification(ctx)
+			if err != nil {
+				writeError(w, http.StatusInternalServerError, err)
+				return
+			}
+			if data != nil {
+				if err := writeMessage(data); err != nil {
+					writeError(w, http.StatusInternalServerError, err)
+					return
+				}
+			}
+		}
+	}
 }
 
 func appGetNotification(w http.ResponseWriter, r *http.Request) {

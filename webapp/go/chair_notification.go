@@ -23,3 +23,25 @@ func signalCharNotification(charID string) {
 	default:
 	}
 }
+
+var appNotificationSignals = new(sync.Map)
+
+func registerAppNotificationSignalHandler(userID string, ch chan<- struct{}) {
+	appNotificationSignals.Store(userID, ch)
+}
+
+func unregisterAppNotificationSignalHandler(userID string, ch chan<- struct{}) {
+	appNotificationSignals.CompareAndDelete(userID, ch)
+}
+
+func signalAppNotification(userID string) {
+	v, ok := appNotificationSignals.Load(userID)
+	if !ok {
+		return
+	}
+	ch := v.(chan<- struct{})
+	select {
+	case ch <- struct{}{}:
+	default:
+	}
+}
