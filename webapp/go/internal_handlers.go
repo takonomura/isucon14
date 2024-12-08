@@ -35,11 +35,17 @@ func internalGetMatching(w http.ResponseWriter, r *http.Request) {
 		var best Chair
 		var bestDistance int
 		for c := range remainingChairs {
+			if c.Latitude == nil || c.Longitude == nil {
+				continue
+			}
 			distance := calculateDistance(*c.Latitude, *c.Longitude, r.PickupLatitude, r.PickupLongitude)
 			if best.ID == "" || bestDistance > distance {
 				best = c
 				bestDistance = distance
 			}
+		}
+		if best.ID == "" {
+			continue
 		}
 		delete(remainingChairs, best)
 
