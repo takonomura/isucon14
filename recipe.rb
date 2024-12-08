@@ -85,8 +85,14 @@ execute 'install netdata' do
 	not_if "systemctl list-unit-files | grep '^netdata.service'"
 end
 
-#service 'netdata' do
-#	action %i[disable stop]
-#end
+service 'netdata' do
+	action %i[disable stop]
+end
+service 'snap.amazon-ssm-agent.amazon-ssm-agent.service' do
+	action %i[disable stop]
+end
+service 'snapd.service' do
+	action %i[disable stop]
+end
 
 package 'percona-toolkit'
