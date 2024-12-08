@@ -382,10 +382,6 @@ func chairGetNotificationSSE(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Connection", "keep-alive")
 
 	writeMessage := func(v interface{}) error {
-		if v == nil {
-			return nil
-		}
-
 		slog.Info("write message", "v", v)
 		buf, err := json.Marshal(v)
 		if err != nil {
@@ -413,9 +409,12 @@ func chairGetNotificationSSE(w http.ResponseWriter, r *http.Request) {
 		writeError(w, http.StatusInternalServerError, err)
 		return
 	}
-	if err := writeMessage(data); err != nil {
-		writeError(w, http.StatusInternalServerError, err)
-		return
+	if data != nil {
+		slog.Info("last message", "data", data)
+		if err := writeMessage(data); err != nil {
+			writeError(w, http.StatusInternalServerError, err)
+			return
+		}
 	}
 
 	for {
@@ -428,9 +427,12 @@ func chairGetNotificationSSE(w http.ResponseWriter, r *http.Request) {
 				writeError(w, http.StatusInternalServerError, err)
 				return
 			}
-			if err := writeMessage(data); err != nil {
-				writeError(w, http.StatusInternalServerError, err)
-				return
+			if data != nil {
+				slog.Info("updated message", "data", "data")
+				if err := writeMessage(data); err != nil {
+					writeError(w, http.StatusInternalServerError, err)
+					return
+				}
 			}
 		}
 	}
