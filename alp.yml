@@ -4,7 +4,7 @@ sort: sum
 reverse: true
 query_string: true
 query_string_ignore_values: true
-output: count,2xx,4xx,5xx,method,uri,min,p50,p99,max
+output: count,2xx,4xx,5xx,method,uri,min,p50,p99,max,sum
 matching_groups:
 - '^/api/chair/rides/[0-9A-Z]+/status$'
 - '^/api/app/rides/[0-9A-Z]+/evaluation$'
