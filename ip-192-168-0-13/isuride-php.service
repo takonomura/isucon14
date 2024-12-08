@@ -1,0 +1,20 @@
+[Unit]
+Description=isuride-php
+After=syslog.target
+After=mysql.service
+Requires=mysql.service
+
+[Service]
+WorkingDirectory=/home/isucon/webapp/php
+EnvironmentFile=/home/isucon/env.sh
+
+User=isucon
+Group=isucon
+ExecStart=/home/isucon/.x php-fpm --fpm-config /home/isucon/local/php/etc/isuride.php-fpm.conf
+ExecStop=/bin/kill -s QUIT $MAINPID
+
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
