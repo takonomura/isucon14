@@ -73,6 +73,7 @@ log_error = /var/log/mysql/error.log
 # server-id		= 1
 # log_bin			= /var/log/mysql/mysql-bin.log
 # binlog_expire_logs_seconds	= 2592000
-max_binlog_size   = 100M
+#max_binlog_size   = 100M
 # binlog_do_db		= include_database_name
 # binlog_ignore_db	= include_database_name
+disable_log_bin
