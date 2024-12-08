@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"log/slog"
 	"net/http"
 	"time"
 
@@ -244,10 +245,12 @@ func (p *chairNotificationProcess) getLastNotification(ctx context.Context) (*ch
 	} else {
 		if ride.ID != yetSentRideStatus.RideID {
 			ride = rides[1]
+			slog.Info("detected second ride", "ride", ride.ID, "status", yetSentRideStatus.Status)
 		}
 		status = yetSentRideStatus.Status
 	}
 	if ride == rides[0] && status == "COMPLETED" {
+		slog.Info("completed all rides", "ride", ride.ID)
 		p.Ride = Ride{}
 		p.LastRideID = ride.ID
 	}
@@ -300,6 +303,7 @@ func (p *chairNotificationProcess) getUnsentNotification(ctx context.Context) (*
 			return nil, err
 		}
 		if ride.ID == p.LastRideID {
+			slog.Info("ride.ID == p.LastRideID", "id", ride.ID)
 			return nil, nil
 		}
 		p.Ride = ride
@@ -353,6 +357,7 @@ func (p *chairNotificationProcess) getUnsentNotification(ctx context.Context) (*
 	}
 
 	if status.Status == "COMPLETED" {
+		slog.Info("Completed Status", "ride", p.Ride.ID)
 		p.LastRideID = p.Ride.ID
 		p.Ride = Ride{}
 		p.User = User{}
@@ -364,6 +369,7 @@ func (p *chairNotificationProcess) getUnsentNotification(ctx context.Context) (*
 func chairGetNotificationSSE(w http.ResponseWriter, r *http.Request) {
 	flusher, ok := w.(http.Flusher)
 	if !ok {
+		slog.Warn("fallback to older notification")
 		chairGetNotification(w, r)
 		return
 	}
@@ -376,6 +382,7 @@ func chairGetNotificationSSE(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Connection", "keep-alive")
 
 	writeMessage := func(v interface{}) error {
+		slog.Info("write message", "v", v)
 		buf, err := json.Marshal(v)
 		if err != nil {
 			return err
