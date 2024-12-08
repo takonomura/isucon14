@@ -1,0 +1,14 @@
+# https://github.com/tkuchiki/alp/blob/main/example/config.yml
+file: /var/log/nginx/access.log
+sort: count
+reverse: true
+query_string: true
+query_string_ignore_values: true
+output: count,2xx,4xx,5xx,method,uri,min,p50,p99,max
+matching_groups:
+- '^/api/users/[0-9]+$'
+percentiles: [50, 99]
+ltsv: {}
+json: {}
+regexp: {}
+pcap: {}

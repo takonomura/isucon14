@@ -1,0 +1,1 @@
+import{j as e}from"./jsx-runtime-56DGgGmo.js";import{t as s}from"./bundle-mjs-Dnoi3Axr.js";const o=({children:a,className:m,...r})=>e.jsx("main",{className:s("md:max-w-screen-md h-full relative ml-auto mr-auto shadow-xl bg-white flex flex-col",m),...r,children:e.jsx("div",{className:"flex flex-col min-h-screen",children:a})});export{o as M};

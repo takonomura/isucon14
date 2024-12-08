@@ -1,0 +1,23 @@
+[project]
+name = "isuride"
+version = "0.1.0"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.115.5",
+    "gunicorn>=23.0.0",
+    "pymysql[rsa]>=1.1.1",
+    "python-ulid>=3.0.0",
+    "sqlalchemy>=2.0.36",
+    "urllib3>=2.2.3",
+    "uvicorn-worker>=0.2.0",
+]
+
+[tool.ruff.lint]
+extend-select = [
+    "UP", # pyupgrade
+    "I", # isort
+    "FAST", # FastAPI
+]
+
+[tool.mypy]
+strict = true
