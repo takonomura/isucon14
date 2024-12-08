@@ -245,12 +245,10 @@ func (p *chairNotificationProcess) getLastNotification(ctx context.Context) (*ch
 	} else {
 		if ride.ID != yetSentRideStatus.RideID {
 			ride = rides[1]
-			slog.Info("detected second ride", "ride", ride.ID, "status", yetSentRideStatus.Status)
 		}
 		status = yetSentRideStatus.Status
 	}
 	if ride == rides[0] && status == "COMPLETED" {
-		slog.Info("completed all rides", "ride", ride.ID)
 		p.Ride = Ride{}
 		p.LastRideID = ride.ID
 	}
@@ -303,7 +301,6 @@ func (p *chairNotificationProcess) getUnsentNotification(ctx context.Context) (*
 			return nil, err
 		}
 		if ride.ID == p.LastRideID {
-			slog.Info("ride.ID == p.LastRideID", "id", ride.ID)
 			return nil, nil
 		}
 		p.Ride = ride
@@ -357,7 +354,6 @@ func (p *chairNotificationProcess) getUnsentNotification(ctx context.Context) (*
 	}
 
 	if status.Status == "COMPLETED" {
-		slog.Info("Completed Status", "ride", p.Ride.ID)
 		p.LastRideID = p.Ride.ID
 		p.Ride = Ride{}
 		p.User = User{}
@@ -382,14 +378,11 @@ func chairGetNotificationSSE(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Cache-Control", "no-cache")
 	w.Header().Set("Connection", "keep-alive")
 
-	defer slog.Info("closed connection")
-
 	writeMessage := func(v interface{}) error {
 		buf, err := json.Marshal(v)
 		if err != nil {
 			return err
 		}
-		slog.Info("write message", "v", string(buf))
 		if _, err := w.Write([]byte("data: ")); err != nil {
 			return err
 		}
@@ -412,7 +405,6 @@ func chairGetNotificationSSE(w http.ResponseWriter, r *http.Request) {
 		writeError(w, http.StatusInternalServerError, err)
 		return
 	}
-	slog.Info("last message", "data", data)
 	if err := writeMessage(data); err != nil {
 		writeError(w, http.StatusInternalServerError, err)
 		return
@@ -429,7 +421,6 @@ func chairGetNotificationSSE(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 			if data != nil {
-				slog.Info("updated message", "data", "data")
 				if err := writeMessage(data); err != nil {
 					writeError(w, http.StatusInternalServerError, err)
 					return
