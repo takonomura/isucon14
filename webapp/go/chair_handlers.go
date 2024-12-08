@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/jmoiron/sqlx"
 	"github.com/oklog/ulid/v2"
 )
 
@@ -199,11 +200,11 @@ func chairGetNotification(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer tx.Rollback()
-	ride := &Ride{}
 	yetSentRideStatus := RideStatus{}
 	status := ""
 
-	if err := tx.GetContext(ctx, ride, `SELECT * FROM rides WHERE chair_id = ? ORDER BY updated_at DESC LIMIT 1`, chair.ID); err != nil {
+	var rides []Ride
+	if err := tx.SelectContext(ctx, &rides, `SELECT * FROM rides WHERE chair_id = ? ORDER BY updated_at DESC LIMIT 2`, chair.ID); err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			writeJSON(w, http.StatusOK, &chairGetNotificationResponse{
 				RetryAfterMs: 500,
@@ -213,8 +214,25 @@ func chairGetNotification(w http.ResponseWriter, r *http.Request) {
 		writeError(w, http.StatusInternalServerError, err)
 		return
 	}
+	if len(rides) == 0 {
+		writeJSON(w, http.StatusOK, &chairGetNotificationResponse{
+			RetryAfterMs: 500,
+		})
+		return
+	}
+	rideIDs := make([]string, len(rides))
+	for i, r := range rides {
+		rideIDs[i] = r.ID
+	}
+	ride := rides[0]
 
-	if err := tx.GetContext(ctx, &yetSentRideStatus, `SELECT * FROM ride_statuses WHERE ride_id = ? AND chair_sent_at IS NULL ORDER BY created_at ASC LIMIT 1`, ride.ID); err != nil {
+	query, args, err := sqlx.In("SELECT * FROM ride_statuses WHERE ride_id = ? AND chair_sent_at IS NULL ORDER BY created_at ASC LIMIT 1", rideIDs)
+	if err != nil {
+		writeError(w, http.StatusInternalServerError, err)
+		return
+	}
+
+	if err := tx.GetContext(ctx, &yetSentRideStatus, query, args...); err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			status, err = getLatestRideStatus(ctx, tx, ride.ID)
 			if err != nil {
@@ -226,6 +244,9 @@ func chairGetNotification(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	} else {
+		if ride.ID != yetSentRideStatus.RideID {
+			ride = rides[1]
+		}
 		status = yetSentRideStatus.Status
 	}
 
