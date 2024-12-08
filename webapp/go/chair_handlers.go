@@ -216,7 +216,7 @@ func chairGetNotification(w http.ResponseWriter, r *http.Request) {
 	}
 	if len(rides) == 0 {
 		writeJSON(w, http.StatusOK, &chairGetNotificationResponse{
-			RetryAfterMs: 500,
+			RetryAfterMs: 1000,
 		})
 		return
 	}
