@@ -29,17 +29,54 @@ CREATE TABLE chairs
   name         VARCHAR(30)  NOT NULL COMMENT '椅子の名前',
   model        TEXT         NOT NULL COMMENT '椅子のモデル',
   is_active    TINYINT(1)   NOT NULL COMMENT '配椅子受付中かどうか',
-  is_matchable TINYINT(1)   NOT NULL COMMENT 'マッチ可能かどうか',
   access_token VARCHAR(255) NOT NULL COMMENT 'アクセストークン',
-  latitude     INTEGER      NULL COMMENT '経度',
-  longitude    INTEGER      NULL COMMENT '緯度',
-  total_distance INTEGER NOT NULL,
-  location_updated_at DATETIME(6) NULL,
   created_at   DATETIME(6)  NOT NULL DEFAULT CURRENT_TIMESTAMP(6) COMMENT '登録日時',
   updated_at   DATETIME(6)  NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6) COMMENT '更新日時',
   PRIMARY KEY (id)
 )
   COMMENT = '椅子情報テーブル';
+
+ALTER TABLE chairs
+ADD COLUMN latitude INTEGER COMMENT '経度' AFTER is_active,
+ADD COLUMN longitude INTEGER COMMENT '緯度' AFTER latitude,
+ADD COLUMN location_updated_at DATETIME(6) COMMENT '位置情報の更新日時' AFTER longitude;
+--UPDATE chairs c
+--JOIN (
+--    SELECT 
+--        cl.chair_id,
+--        cl.latitude,
+--        cl.longitude,
+--        cl.created_at AS location_updated_at
+--    FROM chair_locations cl
+--    INNER JOIN (
+--        SELECT chair_id, MAX(created_at) AS max_created_at
+--        FROM chair_locations
+--        GROUP BY chair_id
+--    ) latest
+--    ON cl.chair_id = latest.chair_id AND cl.created_at = latest.max_created_at
+--) latest_location
+--ON c.id = latest_location.chair_id
+--SET 
+--    c.latitude = latest_location.latitude,
+--    c.longitude = latest_location.longitude,
+--    c.location_updated_at = latest_location.location_updated_at;
+ALTER TABLE chairs
+ADD COLUMN total_distance INTEGER DEFAULT 0 COMMENT '総距離' AFTER longitude;
+--UPDATE chairs c
+--LEFT JOIN (
+--    SELECT chair_id,
+--           SUM(IFNULL(distance, 0)) AS total_distance
+--    FROM (
+--        SELECT chair_id,
+--               ABS(latitude - LAG(latitude) OVER (PARTITION BY chair_id ORDER BY created_at)) +
+--               ABS(longitude - LAG(longitude) OVER (PARTITION BY chair_id ORDER BY created_at)) AS distance
+--        FROM chair_locations
+--    ) tmp
+--    GROUP BY chair_id
+--) distance_table
+--ON c.id = distance_table.chair_id
+--SET c.total_distance = IFNULL(distance_table.total_distance, 0);
+
 CREATE INDEX idx_chairs_created_at ON chairs (created_at);
 
 CREATE INDEX idx_chairs_owner_id_created_at ON chairs (owner_id, created_at DESC);
