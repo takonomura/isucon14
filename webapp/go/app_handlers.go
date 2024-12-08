@@ -800,7 +800,7 @@ func (p *appNotificationProcess) getUnsentNotification(ctx context.Context) (*ap
 		p.FareRideID = p.Ride.ID
 		p.Fare = fare
 	}
-	if p.Ride.ChairID.Valid && p.Chair.ID != p.Ride.ChairID.String {
+	if p.Ride.ChairID.Valid && (p.Chair.ID != p.Ride.ChairID.String || status.Status == "COMPLETED") {
 		chair := &Chair{}
 		if err := tx.GetContext(ctx, chair, `SELECT * FROM chairs WHERE id = ?`, p.Ride.ChairID); err != nil {
 			return nil, err
