@@ -19,8 +19,20 @@ if HOST == ISU01
   service 'isuride-go.service' do
 	  action %i[enable start]
   end
+  service 'isuride-matcher.service' do
+	  action %i[enable start]
+  end
+  service 'isuride-payment_mock.service' do
+	  action %i[enable start]
+  end
 else
   service 'isuride-go.service' do
+	  action %i[disable stop]
+  end
+  service 'isuride-matcher.service' do
+	  action %i[disable stop]
+  end
+  service 'isuride-payment_mock.service' do
 	  action %i[disable stop]
   end
 end
